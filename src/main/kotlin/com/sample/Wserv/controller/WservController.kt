@@ -37,20 +37,17 @@ class Sample2Controller(){
 }
 
 
-data class dataTable(val content: String)
+data class dataTable(val content: String, val body: Any)
 @CrossOrigin(origins = arrayOf("http://localhost:4200", "https://my-app-6e45b.web.app"), maxAge = 3600)
 @RestController
 class ApiController (private val service: WservService){
     @GetMapping("/getdata")
-    fun xx()  : Any {
-        return service.find()
-
+    fun xx(@RequestParam(value = "name", defaultValue = "World") name: String) =
+        dataTable("Hello", service.find())
     }
 
 
 
-
-}
 
 
 
