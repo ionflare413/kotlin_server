@@ -5,13 +5,49 @@
 <mapper namespace="com.sample.Wserv.mapper.WservMapper">
 
     <select id="find" resultType="WservModel">
-        SELECT
-        id,
-        name,
-        price,
-        type
-        FROM
-        item
+        SELECT id, name, price, type FROM item
     </select>
+    <select id="findUser" resultType="UserModel">
+        SELECT * FROM user
+    </select>
+    <select id="findUserById" parameterType="map" resultType="UserModel">
+        SELECT * FROM user WHERE id = #{userId}
+    </select>
+    <select id="findGroupMember" resultType="GroupMemberModel">
+        SELECT * FROM groupmember
+    </select>
+
+    <update id="updateUserById" parameterType="UserModel">
+        update user set
+        name = #{name},
+        groupMemberId = #{groupMemberId},
+        birthDate = #{birthDate},
+        address = #{address},
+        note = #{note},
+        isAddInfo = #{isAddInfo},
+        isDeleted = #{isDeleted},
+        isActive = #{isActive},
+        createTime = #{createTime},
+        updateTime = #{updateTime}
+        where id = #{id}
+    </update>
+
+
+    <insert id="createUser">
+        insert into user
+        values (
+        null,
+        #{name},
+        #{groupMemberId},
+        #{birthDate},
+        #{address},
+        #{note},
+        #{isAddInfo},
+        #{isDeleted},
+        #{isActive},
+        #{createTime},
+        #{updateTime}
+        )
+    </insert>
 
 </mapper>
