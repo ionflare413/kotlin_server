@@ -41,18 +41,23 @@ class Sample2Controller() {
 }
 
 data class Greeting(val id: Long, val content: String)
-//@CrossOrigin(origins = arrayOf("http://localhost:4200", "https://my-app-6e45b.web.app"), maxAge = 3600)
+@CrossOrigin(origins = arrayOf("http://localhost:4200", "https://my-app-6e45b.web.app", "https://my-app-6e45b.firebaseapp.com"), maxAge = 3600)
 @RestController
-class GreetingController {
+class GreetingController(private val service: WservService)  {
 
     val counter = AtomicLong()
     @GetMapping("/greeting")
     fun greeting(@RequestParam(value = "name", defaultValue = "World") name: String) =
             Greeting(counter.incrementAndGet(), "Hello, $name")
 
+    @GetMapping("/getdata")
+    fun getsampleData(): List<WservModel> {
+        return service.find();
+    }
+
 }
 
-@CrossOrigin(origins = arrayOf("http://localhost:4200"), maxAge = 3600)
+@CrossOrigin(origins = arrayOf("http://localhost:4200","https://my-app-6e45b.web.app", "https://my-app-6e45b.firebaseapp.com"), maxAge = 3600)
 @RestController
 class GroupMemberController(private val service: WservService) {
 
@@ -62,7 +67,7 @@ class GroupMemberController(private val service: WservService) {
     }
 }
 
-@CrossOrigin(origins = arrayOf("http://localhost:4200", "https://my-app-6e45b.web.app"), maxAge = 3600)
+@CrossOrigin(origins = arrayOf("http://localhost:4200","https://my-app-6e45b.web.app", "https://my-app-6e45b.firebaseapp.com"), maxAge = 3600)
 @RestController
 class UserController(private val service: WservService) {
 
